@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260811-05-f555caa","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Garden Adventure</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#28485d; --green:#61b879; --yellow:#ffd85a; --pink:#ffb2ca; --blue:#b7eafa; --purple:#dacdfd; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"DM Sans",sans-serif; color:var(--ink); overflow-x:hidden; }
+    button { font-family:inherit; }
+    .app-shell { width:100%; min-height:calc(100 * min(var(--vh, 1vh), 1vh)); position:relative; overflow:hidden; }
+    .garden-pattern { position:fixed; inset:0; pointer-events:none; opacity:.42; background-image:radial-gradient(#fff 2px,transparent 2px); background-size:34px 34px; }
+    .cloud,.sun,.butterfly { position:absolute; z-index:0; pointer-events:none; }
+    .cloud { color:#fff; font-size:clamp(3rem,7vw,6rem); filter:drop-shadow(0 7px 5px rgba(37,129,75,.08)); animation:float 5s ease-in-out infinite; }
+    .cloud-one { top:4%; left:4%; } .cloud-two { top:8%; right:6%; animation-delay:-2s; }
+    .sun { right:13%; top:5%; font-size:clamp(3.6rem,8vw,6rem); animation:pulseSun 3s infinite; }
+    .butterfly { font-size:2rem; animation:flutter 4s ease-in-out infinite; }
+    .b1 { left:8%; bottom:23%; } .b2 { right:9%; bottom:18%; animation-delay:-2s; }
+    .screen { display:none; width:100%; min-height:calc(100 * min(var(--vh, 1vh), 1vh)); position:relative; z-index:1; }
+    .screen.active { display:flex; }
+    .garden-card { background:rgba(255,255,255,.91); border:4px solid rgba(255,255,255,.8); box-shadow:0 13px 0 rgba(43,132,78,.14),0 22px 42px rgba(30,100,70,.14); border-radius:32px; }
+    .game-button { border:0; border-radius:22px; min-height:70px; padding:15px 22px; font-weight:800; font-size:clamp(1rem,2.3vw,1.3rem); cursor:pointer; transition:transform .18s,box-shadow .18s,filter .18s; box-shadow:0 7px 0 rgba(34,86,84,.18); display:inline-flex; align-items:center; justify-content:center; gap:10px; color:var(--ink); }
+    .game-button:hover { transform:translateY(-3px); filter:brightness(1.03); }
+    .game-button:active { transform:translateY(4px); box-shadow:0 2px 0 rgba(34,86,84,.18); }
+    .game-button:focus-visible,.memory-card:focus-visible,.word-chip:focus-visible { outline:5px solid #224f67; outline-offset:4px; }
+    .btn-yellow { background:var(--yellow); } .btn-pink { background:var(--pink); } .btn-blue { background:var(--blue); } .btn-green { background:#b4efbd; } .btn-purple { background:var(--purple); }
+    .nav-pill { border-radius:999px; min-height:49px; padding:10px 16px; font-size:.95rem; }
+    .hero-title { font-size:clamp(2.35rem,7vw,5.5rem); line-height:.95; letter-spacing:-.06em; }
+    .hero-subtitle { font-size:clamp(1.1rem,2.5vw,1.6rem); }
+    .game-card { min-height:156px; text-align:left; padding:20px; align-items:flex-start; flex-direction:column; justify-content:center; }
+    .game-card .icon { font-size:2.5rem; }
+    .answer-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; width:100%; }
+    .answer-button { min-height:84px; font-size:clamp(1.05rem,2.5vw,1.5rem); background:#fff; border:4px solid #c9ebdd; }
+    .answer-button.correct { background:#baf3ba; border-color:#55b85f; animation:bounce .45s; }
+    .answer-button.wrong { background:#ffd0d9; border-color:#ff7395; animation:shake .35s; }
+    .challenge-area { min-height:150px; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .challenge-emoji { display:block; width:100%; text-align:center; font-size:clamp(6rem,17vw,12rem); line-height:1; filter:drop-shadow(0 12px 7px rgba(45,116,70,.18)); }
+    .instruction { font-size:clamp(1.35rem,3.5vw,2.25rem); font-weight:800; text-align:center; }
+    .feedback { min-height:45px; font-size:clamp(1.15rem,2.7vw,1.55rem); font-weight:800; text-align:center; }
+    .feedback.good { color:#178440; } .feedback.bad { color:#d14367; }
+    .progress-dot { width:12px; height:12px; border-radius:99px; background:#d2ead9; }
+    .progress-dot.on { background:#ffbe36; transform:scale(1.25); }
+    .word-chip { border-radius:18px; padding:13px 10px; font-weight:800; background:#f8fff6; border:3px solid #d3efdc; cursor:pointer; transition:transform .18s,background .18s; }
+    .word-chip:hover { background:#fff7c5; transform:translateY(-3px) rotate(-1deg); }
+    .word-chip.speaking { background:#fff0a9; border-color:#f5b838; transform:scale(1.04); }
+    .match-row { display:grid; grid-template-columns:1fr 1.5fr; gap:14px; align-items:center; }
+    .picture-match { background:#fff8dc; border:4px solid #ffe3a2; min-height:78px; font-size:3rem; border-radius:20px; }
+    .word-match { background:#fff; border:4px dashed #b7ddcb; min-height:78px; }
+    .word-match.matched { background:#baf3ba; border-style:solid; border-color:#55b85f; }
+    .pair-choice { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; width:100%; }
+    .object-choice { width:min(220px,42vw); min-height:170px; flex-direction:column; background:#fff; border:4px solid #caebd7; font-size:clamp(1.2rem,2.5vw,1.55rem); }
+    .object-choice span { font-size:clamp(4.4rem,11vw,7rem); }
+    .memory-board { display:grid; grid-template-columns:repeat(4,minmax(54px,1fr)); gap:12px; width:100%; max-width:560px; margin:auto; }
+    .memory-card { min-height:92px; border:0; border-radius:18px; cursor:pointer; background:#8b72cf; color:#fff; font-size:2.4rem; box-shadow:0 6px 0 #6751a6; transition:transform .2s,background .2s; }
+    .memory-card.open { background:#fff; color:var(--ink); box-shadow:0 6px 0 #d6e9d8; transform:rotateY(180deg); }
+    .memory-card.done { background:#baf3ba; color:#248548; box-shadow:0 6px 0 #5faa6a; }
+    .celebrate { animation:celebrate .75s ease both; }
+    .flower-strip { font-size:clamp(2rem,5vw,3.7rem); letter-spacing:.2em; white-space:nowrap; overflow:hidden; }
+    .sound-replay { min-height:50px; font-size:1rem; border-radius:999px; }
+    @keyframes float { 50% { transform:translateY(-12px); } }
+    @keyframes flutter { 50% { transform:translate(16px,-18px) rotate(10deg); } }
+    @keyframes pulseSun { 50% { transform:rotate(8deg) scale(1.06); } }
+    @keyframes bounce { 50% { transform:translateY(-10px) scale(1.06); } }
+    @keyframes shake { 25% { transform:translateX(-8px); } 75% { transform:translateX(8px); } }
+    @keyframes celebrate { 0% { transform:scale(.6) rotate(-7deg); opacity:.2; } 70% { transform:scale(1.08) rotate(3deg); } 100% { transform:scale(1); opacity:1; } }
+    @media (max-width:640px) { .answer-grid { grid-template-columns:1fr; } .match-row { grid-template-columns:1fr; } .memory-card { min-height:68px; font-size:1.7rem; } .game-card { min-height:126px; } }
+  </style>
+  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
+  <script src="/_sdk/04cc6185e046f597.resizing_sdk.js" type="text/javascript" integrity="sha512-CiE/G92aQF0nxneFg1kdOvXih8sQ1Z2a2QI3+r/WvzJwQqH6+IyB3iL07OkJmpm3ABAaf07+FnqWny98f5sR6w=="></script>
+ </head>
+ <body data-template-id="__page-root">
+  <div class="app-shell">
+   <div class="garden-pattern"></div>
+   <div class="cloud cloud-one">
+    ☁️
+   </div>
+   <div class="cloud cloud-two">
+    ☁️
+   </div>
+   <div class="sun">
+    ☀️
+   </div>
+   <div class="butterfly b1">
+    🦋
+   </div>
+   <div class="butterfly b2">
+    🦋
+   </div>
+   <header class="relative z-10 w-full px-4 pt-4">
+    <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3" aria-label="Main navigation">
+     <button type="button" onclick="showScreen('home')" class="game-button nav-pill btn-yellow"> <span>🌈</span><span data-template-id="nav-brand" class="canva-text"></span> </button>
+     <div class="flex flex-wrap justify-end gap-2">
+      <button type="button" onclick="showScreen('home')" data-template-id="nav-home" class="canva-button game-button nav-pill"></button> <button type="button" onclick="toggleSound()" class="game-button nav-pill btn-pink" aria-label="Toggle sound"> <span id="soundIcon">🔊</span><span data-template-id="nav-sound" class="canva-text"></span> </button>
+     </div>
+    </nav>
+   </header>
+   <main>
+    <section id="home" class="screen active items-center justify-center px-4 py-10">
+     <div class="garden-card mx-auto w-full max-w-4xl px-6 py-10 text-center sm:px-12">
+      <div class="mb-4 text-5xl">
+       🌸 🐝 🌸
+      </div>
+      <p data-template-id="home-kicker" class="canva-text mb-3 font-extrabold tracking-widest"></p>
+      <h1 data-template-id="home-title" class="canva-text hero-title mb-5"></h1>
+      <p data-template-id="home-subtitle" class="canva-text hero-subtitle mx-auto mb-9 max-w-xl"></p>
+      <div class="mx-auto grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
+       <button type="button" onclick="startAdventure()" data-template-id="start-game-button" class="canva-button game-button"></button> <button type="button" onclick="showScreen('learn')" data-template-id="learn-words-button" class="canva-button game-button"></button> <button type="button" onclick="showScreen('games')" data-template-id="games-button" class="canva-button game-button"></button> <button type="button" onclick="showScreen('score')" data-template-id="my-score-button" class="canva-button game-button"></button>
+      </div>
+      <div class="flower-strip mt-9">
+       🌷 🌼 🌸 🌻 🌷 🌼 🌸 🌻
+      </div>
+     </div>
+    </section>
+    <section id="games" class="screen items-center px-4 py-8">
+     <div class="garden-card mx-auto w-full max-w-6xl p-6 sm:p-9">
+      <div class="mb-7 text-center">
+       <h1 data-template-id="games-title" class="canva-text mb-2"></h1>
+       <p data-template-id="games-subtitle" class="canva-text"></p>
+      </div>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+       <button type="button" onclick="openGame(0)" class="game-button game-card btn-yellow"><span class="icon">🔎</span><span data-template-id="game-card-1" class="canva-text"></span></button> <button type="button" onclick="openGame(1)" class="game-button game-card btn-pink"><span class="icon">🧩</span><span data-template-id="game-card-2" class="canva-text"></span></button> <button type="button" onclick="openGame(2)" class="game-button game-card btn-blue"><span class="icon">🎨</span><span data-template-id="game-card-3" class="canva-text"></span></button> <button type="button" onclick="openGame(3)" class="game-button game-card btn-green"><span class="icon">🐶</span><span data-template-id="game-card-4" class="canva-text"></span></button> <button type="button" onclick="openGame(4)" class="game-button game-card btn-purple"><span class="icon">🔤</span><span data-template-id="game-card-5" class="canva-text"></span></button> <button type="button" onclick="openGame(5)" class="game-button game-card btn-yellow"><span class="icon">🔢</span><span data-template-id="game-card-6" class="canva-text"></span></button> <button type="button" onclick="openGame(6)" class="game-button game-card btn-pink"><span class="icon">🐘</span><span data-template-id="game-card-7" class="canva-text"></span></button> <button type="button" onclick="openGame(7)" class="game-button game-card btn-blue"><span class="icon">🧠</span><span data-template-id="game-card-8" class="canva-text"></span></button>
+      </div>
+     </div>
+    </section>
+    <section id="learn" class="screen items-center px-4 py-8">
+     <div class="garden-card mx-auto w-full max-w-5xl p-6 text-center sm:p-10">
+      <h1 data-template-id="learn-title" class="canva-text mb-2"></h1>
+      <p data-template-id="learn-subtitle" class="canva-text mb-2"></p>
+      <p data-template-id="learn-audio-hint" class="canva-text mb-7"></p>
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+       <button type="button" onclick="speakWord('Apple',this)" data-template-id="word-apple" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Banana',this)" data-template-id="word-banana" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Orange',this)" data-template-id="word-orange" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Grapes',this)" data-template-id="word-grapes" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Cat',this)" data-template-id="word-cat" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Dog',this)" data-template-id="word-dog" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Fish',this)" data-template-id="word-fish" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Duck',this)" data-template-id="word-duck" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Ball',this)" data-template-id="word-ball" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Flower',this)" data-template-id="word-flower" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Car',this)" data-template-id="word-car" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('House',this)" data-template-id="word-house" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Red',this)" data-template-id="word-red" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Blue',this)" data-template-id="word-blue" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Green',this)" data-template-id="word-green" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Yellow',this)" data-template-id="word-yellow" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('One',this)" data-template-id="word-one" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Two',this)" data-template-id="word-two" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Three',this)" data-template-id="word-three" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Four',this)" data-template-id="word-four" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Big',this)" data-template-id="word-big" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Small',this)" data-template-id="word-small" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Happy',this)" data-template-id="word-happy" class="canva-button canva-card word-chip"></button> <button type="button" onclick="speakWord('Thank you',this)" data-template-id="word-thankyou" class="canva-button canva-card word-chip"></button>
+      </div><button type="button" onclick="showScreen('games')" data-template-id="learn-play-button" class="canva-button game-button mt-8"></button>
+     </div>
+    </section>
+    <section id="game" class="screen items-center px-4 py-6">
+     <div class="garden-card mx-auto w-full max-w-4xl p-5 sm:p-8">
+      <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+       <button type="button" onclick="showScreen('games')" data-template-id="game-home-button" class="canva-button game-button nav-pill"></button>
+       <div class="rounded-full bg-white px-4 py-2 font-extrabold shadow-sm">
+        ⭐ <span data-template-id="score-label" class="canva-text"></span> <span id="scoreNumber">0</span>
+       </div>
+       <div id="progressDots" class="flex gap-2" aria-label="Question progress"></div>
+      </div>
+      <h1 id="gameName" class="mb-2 text-center text-2xl font-extrabold sm:text-4xl"></h1>
+      <p id="instruction" class="instruction mb-4"></p>
+      <div id="soundControl" class="hidden mb-3 text-center">
+       <button type="button" onclick="replayAnimalSound()" data-template-id="hear-animal-button" class="canva-button game-button sound-replay"></button>
+      </div>
+      <div id="challengeArea" class="challenge-area mb-5"></div>
+      <div id="answers" class="answer-grid"></div>
+      <p id="feedback" class="feedback mt-5" aria-live="polite"></p>
+      <div class="mt-4 flex justify-center">
+       <button id="nextButton" type="button" onclick="nextQuestion()" data-template-id="next-button" class="canva-button game-button hidden"></button>
+      </div>
+     </div>
+    </section>
+    <section id="score" class="screen items-center justify-center px-4 py-10">
+     <div class="garden-card celebrate mx-auto w-full max-w-3xl p-8 text-center sm:p-12">
+      <div class="text-7xl">
+       🏆
+      </div>
+      <h1 data-template-id="score-title" class="canva-text mt-4"></h1>
+      <p data-template-id="score-message" class="canva-text mx-auto mt-4 max-w-xl"></p>
+      <div class="my-7 rounded-3xl bg-yellow-100 p-5">
+       <div class="text-xl font-extrabold">
+        ⭐ <span data-template-id="final-score-label" class="canva-text"></span>
+       </div>
+       <div id="finalScore" class="mt-1 text-5xl font-extrabold text-amber-500">
+        0
+       </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4">
+       <button type="button" onclick="startAdventure()" data-template-id="play-again-button" class="canva-button game-button"></button> <button type="button" onclick="showScreen('home')" data-template-id="score-home-button" class="canva-button game-button"></button>
+      </div>
+      <div class="mt-8 text-4xl">
+       🌈 🎉 ⭐ 🦋 🌸
+      </div>
+     </div>
+    </section>
+   </main>
+  </div>
+  <script src="/_sdk/1a0e63f7a958ec3e.editing_sdk.js" integrity="sha512-lW+iibZ5vXaBl3IQ1K3ooQE1gfdDZxiO+Y7NpWdeypLOwr1WIYo3edm3nu+wyePemyM75tcU3yV7YyImK9wxMQ=="></script>
+  <script>
+    let score = 0;
+    let soundOn = true;
+    let gameIndex = 0;
+    let questionIndex = 0;
+    let gameCorrect = false;
+    let matchState = { selected: null, matched: [] };
+    let memoryState = { cards: [], open: [], matched: [] };
+    let currentAnimalSound = "";
+
+    const games = [
+      {
+        name:"Find the Word 🔎", type:"quiz",
+        questions:[
+          {instruction:"What is this?",emoji:"🍎",answer:"Apple",choices:["Apple","Cat","Ball"]},
+          {instruction:"What is this?",emoji:"🐱",answer:"Cat",choices:["Dog","Cat","Fish"]},
+          {instruction:"What is this?",emoji:"⚽",answer:"Ball",choices:["Ball","Apple","Car"]},
+          {instruction:"What is this?",emoji:"🐶",answer:"Dog",choices:["Cat","Dog","Duck"]},
+          {instruction:"What is this?",emoji:"🍌",answer:"Banana",choices:["Banana","Orange","Ball"]},
+          {instruction:"What is this?",emoji:"🐟",answer:"Fish",choices:["Fish","Bird","Cat"]},
+          {instruction:"What is this?",emoji:"🧸",answer:"Teddy",choices:["Teddy","Fish","Hand"]},
+          {instruction:"What is this?",emoji:"👂",answer:"Ear",choices:["Foot","Ear","Nose"]},
+          {instruction:"What is this?",emoji:"🍇",answer:"Grapes",choices:["Grapes","Apple","Ball"]},
+          {instruction:"What is this?",emoji:"🦆",answer:"Duck",choices:["Duck","Cat","Dog"]},
+          {instruction:"What is this?",emoji:"🏠",answer:"House",choices:["House","Car","Ball"]},
+          {instruction:"What is this?",emoji:"🌸",answer:"Flower",choices:["Flower","Fish","Apple"]}
+        ]
+      },
+      {
+        name:"Match the Picture 🧩", type:"match",
+        rounds:[
+          [{emoji:"🍎",word:"APPLE"},{emoji:"🐱",word:"CAT"},{emoji:"⚽",word:"BALL"}],
+          [{emoji:"🐶",word:"DOG"},{emoji:"🐟",word:"FISH"},{emoji:"🍌",word:"BANANA"}],
+          [{emoji:"🦆",word:"DUCK"},{emoji:"🍇",word:"GRAPES"},{emoji:"🌸",word:"FLOWER"}],
+          [{emoji:"🍊",word:"ORANGE"},{emoji:"🏠",word:"HOUSE"},{emoji:"🚗",word:"CAR"}]
+        ]
+      },
+      {
+        name:"Colour Fun 🎨", type:"quiz",
+        questions:[
+          {instruction:"What colour is the apple?",emoji:"🍎",answer:"Red",choices:["Red","Blue","Yellow"]},
+          {instruction:"What colour is the sky?",emoji:"🟦",answer:"Blue",choices:["Green","Blue","Pink"]},
+          {instruction:"What colour is the sun?",emoji:"☀️",answer:"Yellow",choices:["Yellow","Red","Blue"]},
+          {instruction:"What colour is the leaf?",emoji:"🍃",answer:"Green",choices:["Orange","Green","Pink"]},
+          {instruction:"What colour is the orange?",emoji:"🍊",answer:"Orange",choices:["Blue","Orange","Red"]},
+          {instruction:"What colour is the flower?",emoji:"🌸",answer:"Pink",choices:["Pink","Green","Yellow"]},
+          {instruction:"What colour is the strawberry?",emoji:"🍓",answer:"Red",choices:["Red","Purple","Blue"]},
+          {instruction:"What colour is the grape?",emoji:"🟣",answer:"Purple",choices:["Purple","Green","Orange"]},
+          {instruction:"What colour is the grass?",emoji:"🌱",answer:"Green",choices:["Yellow","Green","Blue"]},
+          {instruction:"What colour is the heart?",emoji:"💗",answer:"Pink",choices:["Pink","Orange","Blue"]}
+        ]
+      },
+      {
+        name:"Animal Sounds 🐶", type:"animal",
+        questions:[
+          {instruction:"Which animal says Woof?",sound:"dog",answer:"🐶 Dog",choices:["🐶 Dog","🐱 Cat","🐮 Cow"]},
+          {instruction:"Which animal says Meow?",sound:"cat",answer:"🐱 Cat",choices:["🐶 Dog","🐱 Cat","🐸 Frog"]},
+          {instruction:"Which animal says Moo?",sound:"cow",answer:"🐮 Cow",choices:["🐮 Cow","🐑 Sheep","🐦 Bird"]},
+          {instruction:"Which animal says Quack?",sound:"duck",answer:"🦆 Duck",choices:["🐟 Fish","🦆 Duck","🐴 Horse"]},
+          {instruction:"Which animal says Baa?",sound:"sheep",answer:"🐑 Sheep",choices:["🐑 Sheep","🐱 Cat","🐶 Dog"]},
+          {instruction:"Which animal says Neigh?",sound:"horse",answer:"🐴 Horse",choices:["🐴 Horse","🐮 Cow","🐦 Bird"]},
+          {instruction:"Which animal says Ribbit?",sound:"frog",answer:"🐸 Frog",choices:["🐸 Frog","🐟 Fish","🦁 Lion"]},
+          {instruction:"Which animal says Roar?",sound:"lion",answer:"🦁 Lion",choices:["🦁 Lion","🐶 Dog","🐱 Cat"]},
+          {instruction:"Which animal says Tweet?",sound:"bird",answer:"🐦 Bird",choices:["🐦 Bird","🐮 Cow","🐑 Sheep"]},
+          {instruction:"Which animal says Growl?",sound:"bear",answer:"🐻 Bear",choices:["🐻 Bear","🐶 Dog","🐱 Cat"]}
+        ]
+      },
+      {
+        name:"Letter Hunt 🔤", type:"quiz",
+        questions:[
+          {instruction:"Find something that starts with A.",emoji:"A",answer:"🍎 Apple",choices:["🍎 Apple","🐱 Cat","🐶 Dog"]},
+          {instruction:"Find something that starts with B.",emoji:"B",answer:"⚽ Ball",choices:["🐟 Fish","⚽ Ball","🍎 Apple"]},
+          {instruction:"Find something that starts with C.",emoji:"C",answer:"🐱 Cat",choices:["🐶 Dog","🐱 Cat","🌸 Flower"]},
+          {instruction:"Find something that starts with D.",emoji:"D",answer:"🐶 Dog",choices:["🍊 Orange","🐶 Dog","🐟 Fish"]},
+          {instruction:"Find something that starts with E.",emoji:"E",answer:"🐘 Elephant",choices:["🐱 Cat","🐘 Elephant","⚽ Ball"]},
+          {instruction:"Find something that starts with F.",emoji:"F",answer:"🐟 Fish",choices:["🐟 Fish","🐶 Dog","🍎 Apple"]},
+          {instruction:"Find something that starts with G.",emoji:"G",answer:"🍇 Grapes",choices:["🍌 Banana","🍇 Grapes","⚽ Ball"]},
+          {instruction:"Find something that starts with H.",emoji:"H",answer:"🏠 House",choices:["🐱 Cat","🏠 House","🐟 Fish"]},
+          {instruction:"Find something that starts with I.",emoji:"I",answer:"🍦 Ice cream",choices:["🍎 Apple","🍦 Ice cream","🐶 Dog"]},
+          {instruction:"Find something that starts with J.",emoji:"J",answer:"🧃 Juice",choices:["⚽ Ball","🧃 Juice","🐱 Cat"]},
+          {instruction:"Find something that starts with K.",emoji:"K",answer:"🪁 Kite",choices:["🍌 Banana","🪁 Kite","🐟 Fish"]},
+          {instruction:"Find something that starts with L.",emoji:"L",answer:"🦁 Lion",choices:["🐶 Dog","🦁 Lion","🍎 Apple"]}
+        ]
+      },
+      {
+        name:"Count & Choose 🔢", type:"count",
+        questions:[
+          {emoji:"🍎",label:"apples",count:1},{emoji:"⭐",label:"stars",count:2},
+          {emoji:"🌸",label:"flowers",count:3},{emoji:"🐝",label:"bees",count:4},
+          {emoji:"🍌",label:"bananas",count:5},{emoji:"🐟",label:"fish",count:6},
+          {emoji:"🦋",label:"butterflies",count:7},{emoji:"⚽",label:"balls",count:8},
+          {emoji:"🍊",label:"oranges",count:9},{emoji:"🌈",label:"rainbows",count:10}
+        ]
+      },
+      {
+        name:"Big or Small 🐘", type:"compare",
+        questions:[
+          {instruction:"Which one is BIG?",choices:[{emoji:"🐘",label:"Elephant",correct:true},{emoji:"🐭",label:"Mouse",correct:false}]},
+          {instruction:"Which one is SMALL?",choices:[{emoji:"🦒",label:"Giraffe",correct:false},{emoji:"🐭",label:"Mouse",correct:true}]},
+          {instruction:"Which one is TALL?",choices:[{emoji:"🦒",label:"Giraffe",correct:true},{emoji:"🐶",label:"Dog",correct:false}]},
+          {instruction:"Which one is SHORT?",choices:[{emoji:"🐍",label:"Snake",correct:false},{emoji:"🐸",label:"Frog",correct:true}]},
+          {instruction:"Which one is LONG?",choices:[{emoji:"🐍",label:"Snake",correct:true},{emoji:"🐱",label:"Cat",correct:false}]},
+          {instruction:"Which one is FAST?",choices:[{emoji:"🐆",label:"Cheetah",correct:true},{emoji:"🐢",label:"Turtle",correct:false}]},
+          {instruction:"Which one is SLOW?",choices:[{emoji:"🐆",label:"Cheetah",correct:false},{emoji:"🐢",label:"Turtle",correct:true}]},
+          {instruction:"Which one is HEAVY?",choices:[{emoji:"🐘",label:"Elephant",correct:true},{emoji:"🦋",label:"Butterfly",correct:false}]},
+          {instruction:"Which one is HOT?",choices:[{emoji:"☀️",label:"Sun",correct:true},{emoji:"❄️",label:"Ice",correct:false}]},
+          {instruction:"Which one is COLD?",choices:[{emoji:"🔥",label:"Fire",correct:false},{emoji:"❄️",label:"Ice",correct:true}]}
+        ]
+      },
+      {
+        name:"English Memory Cards 🧠", type:"memory",
+        rounds:[
+          ["🍎","🍎","🐶","🐶","⚽","⚽","🐱","🐱"],
+          ["🍌","🍌","🐟","🐟","🌸","🌸","🦆","🦆"],
+          ["🍇","🍇","🐝","🐝","🍊","🍊","🦋","🦋"],
+          ["🚗","🚗","🏠","🏠","🧸","🧸","🌈","🌈"]
+        ]
+      }
+    ];
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      if (id === "score") document.getElementById("finalScore").textContent = score;
+      window.scrollTo({ top:0, behavior:"smooth" });
+    }
+
+    function startAdventure() { score = 0; updateScore(); openGame(0); }
+
+    function openGame(index) {
+      gameIndex = index;
+      questionIndex = 0;
+      gameCorrect = false;
+      const selectedGame = games[gameIndex];
+      if (selectedGame.questions) selectedGame.questions = shuffle(selectedGame.questions);
+      if (selectedGame.rounds) selectedGame.rounds = shuffle(selectedGame.rounds);
+      showScreen("game");
+      renderGame();
+    }
+
+    function renderGame() {
+      const game = games[gameIndex];
+      document.getElementById("gameName").textContent = game.name;
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("feedback").className = "feedback mt-5";
+      document.getElementById("nextButton").classList.add("hidden");
+      document.getElementById("answers").replaceChildren();
+      document.getElementById("soundControl").classList.add("hidden");
+      const area = document.getElementById("challengeArea");
+      area.replaceChildren();
+      area.className = "challenge-area mb-5";
+      renderProgress(getTotalRounds(game));
+
+      if (game.type === "quiz") renderQuiz(game.questions[questionIndex]);
+      if (game.type === "animal") renderAnimal(game.questions[questionIndex]);
+      if (game.type === "count") renderCount(game.questions[questionIndex]);
+      if (game.type === "compare") renderCompare(game.questions[questionIndex]);
+      if (game.type === "match") renderMatch(game.rounds[questionIndex]);
+      if (game.type === "memory") renderMemory(game.rounds[questionIndex]);
+    }
+
+    function getTotalRounds(game) { return game.questions ? game.questions.length : game.rounds.length; }
+
+    function renderProgress(total) {
+      const dots = document.getElementById("progressDots");
+      dots.replaceChildren();
+      for (let i = 0; i < Math.min(total, 12); i++) {
+        const dot = document.createElement("span");
+        dot.className = "progress-dot" + (i <= questionIndex ? " on" : "");
+        dots.appendChild(dot);
+      }
+    }
+
+    function renderQuiz(question) {
+      document.getElementById("instruction").textContent = question.instruction;
+      const visual = document.createElement("div");
+      visual.className = "challenge-emoji";
+      visual.textContent = question.emoji;
+      document.getElementById("challengeArea").appendChild(visual);
+      addAnswerButtons(question.choices, question.answer);
+    }
+
+    function renderAnimal(question) {
+      currentAnimalSound = question.sound;
+      document.getElementById("instruction").textContent = question.instruction;
+      document.getElementById("soundControl").classList.remove("hidden");
+      const visual = document.createElement("div");
+      visual.className = "challenge-emoji";
+      visual.textContent = "🔊";
+      document.getElementById("challengeArea").appendChild(visual);
+      addAnswerButtons(question.choices, question.answer);
+      setTimeout(() => playAnimalSound(question.sound), 250);
+    }
+
+    function addAnswerButtons(choices, answer) {
+      choices.forEach(choice => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "game-button answer-button";
+        button.textContent = choice;
+        button.onclick = () => checkAnswer(button, choice === answer);
+        document.getElementById("answers").appendChild(button);
+      });
+    }
+
+    function renderCount(question) {
+      document.getElementById("instruction").textContent = "How many " + question.label + "?";
+      const display = document.createElement("div");
+      display.className = "challenge-emoji";
+      display.style.fontSize = "clamp(2.8rem,7vw,5.6rem)";
+      display.textContent = Array(question.count).fill(question.emoji).join(" ");
+      document.getElementById("challengeArea").appendChild(display);
+
+      const values = createUniqueCountChoices(question.count);
+      values.forEach(value => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "game-button answer-button";
+        button.textContent = value;
+        button.onclick = () => checkAnswer(button, value === question.count);
+        document.getElementById("answers").appendChild(button);
+      });
+    }
+
+    function createUniqueCountChoices(answer) {
+      const options = new Set([answer]);
+      const candidates = [answer - 1, answer + 1, answer - 2, answer + 2, answer - 3, answer + 3, answer - 4, answer + 4];
+      for (const value of candidates) {
+        if (value >= 1 && value <= 10 && options.size < 3) options.add(value);
+      }
+      return shuffle([...options]);
+    }
+
+    function renderCompare(question) {
+      document.getElementById("instruction").textContent = question.instruction;
+      const wrapper = document.createElement("div");
+      wrapper.className = "pair-choice";
+      question.choices.forEach(item => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "game-button object-choice";
+        const emoji = document.createElement("span");
+        emoji.textContent = item.emoji;
+        const label = document.createElement("span");
+        label.style.fontSize = "inherit";
+        label.textContent = item.label;
+        button.append(emoji, label);
+        button.onclick = () => checkAnswer(button, item.correct);
+        wrapper.appendChild(button);
+      });
+      document.getElementById("challengeArea").appendChild(wrapper);
+    }
+
+    function renderMatch(items) {
+      matchState = { selected:null, matched:[] };
+      document.getElementById("instruction").textContent = "Tap a picture, then tap its word!";
+      const words = shuffle(items.map(item => item.word));
+      const area = document.getElementById("challengeArea");
+      area.className = "mx-auto max-w-2xl space-y-3 w-full";
+      items.forEach((item, index) => {
+        const row = document.createElement("div");
+        row.className = "match-row";
+        const pic = document.createElement("button");
+        pic.type = "button";
+        pic.className = "game-button picture-match";
+        pic.textContent = item.emoji;
+        pic.setAttribute("aria-label", item.word);
+        pic.onclick = () => selectPicture(item.word, pic);
+        const word = document.createElement("button");
+        word.type = "button";
+        word.className = "game-button word-match";
+        word.textContent = words[index];
+        word.onclick = () => selectWord(words[index], word);
+        row.append(pic, word);
+        area.appendChild(row);
+      });
+    }
+
+    function selectPicture(word, element) {
+      if (matchState.matched.includes(word)) return;
+      document.querySelectorAll(".picture-match").forEach(el => el.style.outline = "");
+      matchState.selected = word;
+      element.style.outline = "5px solid #ffbe36";
+      document.getElementById("feedback").textContent = "Now find the word!";
+    }
+
+    function selectWord(word, element) {
+      if (!matchState.selected || matchState.matched.includes(word)) return;
+      const feedback = document.getElementById("feedback");
+      if (word === matchState.selected) {
+        element.classList.add("matched");
+        element.disabled = true;
+        matchState.matched.push(word);
+        document.querySelectorAll(".picture-match").forEach(pic => {
+          if (pic.getAttribute("aria-label") === word) {
+            pic.style.background = "#baf3ba";
+            pic.style.borderColor = "#55b85f";
+            pic.style.outline = "";
+            pic.disabled = true;
+          }
+        });
+        matchState.selected = null;
+        feedback.textContent = "Great Job! ⭐";
+        feedback.className = "feedback good mt-5";
+        playTone(true);
+        if (matchState.matched.length === 3) {
+          score++;
+          updateScore();
+          feedback.textContent = "Amazing! You matched them all! 🎉";
+          document.getElementById("nextButton").classList.remove("hidden");
+        }
+      } else {
+        feedback.textContent = "Try Again!";
+        feedback.className = "feedback bad mt-5";
+        element.classList.add("wrong");
+        setTimeout(() => element.classList.remove("wrong"), 400);
+        playTone(false);
+      }
+    }
+
+    function renderMemory(cards) {
+      document.getElementById("instruction").textContent = "Find the matching pairs!";
+      memoryState = { cards:shuffle(cards), open:[], matched:[] };
+      const board = document.createElement("div");
+      board.className = "memory-board";
+      memoryState.cards.forEach((value, index) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "memory-card";
+        card.textContent = "⭐";
+        card.setAttribute("aria-label", "Memory card " + (index + 1));
+        card.onclick = () => flipCard(index, card);
+        board.appendChild(card);
+      });
+      document.getElementById("challengeArea").appendChild(board);
+    }
+
+    function flipCard(index, card) {
+      if (memoryState.open.length === 2 || memoryState.open.includes(index) || memoryState.matched.includes(index)) return;
+      card.textContent = memoryState.cards[index];
+      card.classList.add("open");
+      memoryState.open.push(index);
+      if (memoryState.open.length !== 2) return;
+      const [first, second] = memoryState.open;
+      const buttons = document.querySelectorAll(".memory-card");
+      if (memoryState.cards[first] === memoryState.cards[second]) {
+        setTimeout(() => {
+          buttons[first].classList.add("done");
+          buttons[second].classList.add("done");
+          memoryState.matched.push(first, second);
+          memoryState.open = [];
+          playTone(true);
+          if (memoryState.matched.length === memoryState.cards.length) {
+            score++;
+            updateScore();
+            const feedback = document.getElementById("feedback");
+            feedback.textContent = "You did it! 🎉";
+            feedback.className = "feedback good mt-5";
+            document.getElementById("nextButton").classList.remove("hidden");
+          }
+        }, 450);
+      } else {
+        setTimeout(() => {
+          [first, second].forEach(i => {
+            buttons[i].textContent = "⭐";
+            buttons[i].classList.remove("open");
+          });
+          memoryState.open = [];
+          document.getElementById("feedback").textContent = "Try Again!";
+          document.getElementById("feedback").className = "feedback bad mt-5";
+          playTone(false);
+        }, 650);
+      }
+    }
+
+    function checkAnswer(button, correct) {
+      if (gameCorrect) return;
+      const feedback = document.getElementById("feedback");
+      if (correct) {
+        gameCorrect = true;
+        button.classList.add("correct");
+        document.querySelectorAll(".answer-button,.object-choice").forEach(b => b.disabled = true);
+        score++;
+        updateScore();
+        feedback.textContent = "Great Job! 🎉";
+        feedback.className = "feedback good mt-5";
+        document.getElementById("nextButton").classList.remove("hidden");
+        playTone(true);
+      } else {
+        button.classList.add("wrong");
+        feedback.textContent = "Try Again!";
+        feedback.className = "feedback bad mt-5";
+        setTimeout(() => button.classList.remove("wrong"), 450);
+        playTone(false);
+      }
+    }
+
+    function nextQuestion() {
+      const game = games[gameIndex];
+      if (questionIndex < getTotalRounds(game) - 1) {
+        questionIndex++;
+        gameCorrect = false;
+        renderGame();
+      } else {
+        finishOrContinue();
+      }
+    }
+
+    function finishOrContinue() {
+      if (gameIndex < games.length - 1) openGame(gameIndex + 1);
+      else showScreen("score");
+    }
+
+    function updateScore() {
+      document.getElementById("scoreNumber").textContent = score;
+      document.getElementById("finalScore").textContent = score;
+    }
+
+    function shuffle(items) {
+      const copy = [...items];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      document.getElementById("soundIcon").textContent = soundOn ? "🔊" : "🔇";
+      if (soundOn) playTone(true);
+      if (!soundOn && "speechSynthesis" in window) window.speechSynthesis.cancel();
+    }
+
+    function speakWord(word, element) {
+      if (!soundOn || !("speechSynthesis" in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = "en-US";
+      utterance.rate = 0.72;
+      utterance.pitch = 1.12;
+      document.querySelectorAll(".word-chip").forEach(chip => chip.classList.remove("speaking"));
+      element.classList.add("speaking");
+      utterance.onend = () => element.classList.remove("speaking");
+      utterance.onerror = () => element.classList.remove("speaking");
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function replayAnimalSound() {
+      playAnimalSound(currentAnimalSound);
+    }
+
+    function playAnimalSound(animal) {
+      if (!soundOn) return;
+      const patterns = {
+        dog:[180,160,180,145], cat:[700,820,960], cow:[140,115,100], duck:[520,460,520], sheep:[330,300,270], horse:[180,220,185], frog:[230,185,230], lion:[120,105,90], bird:[1100,1350,1550], bear:[130,110,95]
+      };
+      const notes = patterns[animal] || [440];
+      playPattern(notes, animal === "lion" || animal === "cow" ? "sawtooth" : "triangle");
+    }
+
+    function playPattern(notes, wave) {
+      if (!(window.AudioContext || window.webkitAudioContext)) return;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const context = new AudioCtx();
+      notes.forEach((frequency, index) => {
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        const start = context.currentTime + index * 0.16;
+        oscillator.type = wave;
+        oscillator.frequency.setValueAtTime(frequency, start);
+        oscillator.frequency.exponentialRampToValueAtTime(Math.max(70, frequency * 0.82), start + 0.13);
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.12, start + 0.025);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.15);
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+        oscillator.start(start);
+        oscillator.stop(start + 0.16);
+      });
+    }
+
+    function playTone(success) {
+      if (!soundOn || !(window.AudioContext || window.webkitAudioContext)) return;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const context = new AudioCtx();
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = success ? "sine" : "triangle";
+      oscillator.frequency.setValueAtTime(success ? 660 : 220, context.currentTime);
+      if (success) oscillator.frequency.exponentialRampToValueAtTime(990, context.currentTime + .22);
+      gain.gain.setValueAtTime(.11, context.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.001, context.currentTime + .3);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start();
+      oscillator.stop(context.currentTime + .32);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => lucide.createIcons());
+  </script>
+ </body>
+</html>
